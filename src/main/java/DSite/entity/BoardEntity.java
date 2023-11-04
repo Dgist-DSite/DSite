@@ -30,14 +30,26 @@ public class BoardEntity{
     private String category;
 
     @Column
+    private String title;
+
+    @Column
+    private String image;
+
+    @Column
+    private String description;
+
+    @Column
     private LocalDateTime regDate;
 
     @Builder
-    public BoardEntity(String userName, String content, String url, String category) {
+    public BoardEntity(String userName, String url, String content, String category, String title, String image, String description) {
         this.userName = userName;
-        this.content = content;
         this.url = url;
+        this.content = content;
         this.category = category;
-        this.regDate=LocalDateTime.now();
+        this.title = title;
+        this.image = image;
+        this.description = description;
+        this.regDate = LocalDateTime.now();
     }
 }
