@@ -35,7 +35,7 @@ public class BoardEntity{
     @Column
     private String image;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @Column

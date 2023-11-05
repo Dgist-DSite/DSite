@@ -29,9 +29,21 @@ public class BoardServiceImpl implements BoardService{
         String ogTitle = document.select("meta[property=og:title]").attr("content"); //제목
         String ogImage = document.select("meta[property=og:image]").attr("content"); //이미지
         String ogDescription = document.select("meta[property=og:description]").attr("content"); //설명
-        boardDto.setTitle(ogTitle);
-        boardDto.setImage(ogImage);
-        boardDto.setDescription(ogDescription);
+        if (ogTitle.isEmpty()){
+            boardDto.setTitle("제목 미리보기를 지원하지 않습니다.");
+        } else{
+            boardDto.setTitle(ogTitle);
+        }
+        if (ogImage.isEmpty()){
+            boardDto.setImage("https://hook-s3-innosync.s3.ap-northeast-2.amazonaws.com/images/dgsw1.png");
+        } else {
+            boardDto.setImage(ogImage);
+        }
+        if (ogDescription.isEmpty()){
+            boardDto.setDescription("설명 미리보기를 지원하지 않습니다.");
+        } else {
+            boardDto.setDescription(ogDescription);
+        }
         BoardEntity boardEntity = dtoToEntity(boardDto);
 
         BaseResponse baseResponse = new BaseResponse();
