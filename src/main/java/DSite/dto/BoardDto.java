@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Builder
 public class BoardDto {
 
+    private Long id;
     private String userName;
     private String url;
     private String content;
