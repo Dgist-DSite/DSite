@@ -48,15 +48,28 @@ public class BoardServiceImpl implements BoardService{
 
         BaseResponse baseResponse = new BaseResponse();
 
-        try {
-            boardRepository.save(boardEntity);
-            baseResponse.setStatus(HttpStatus.CREATED);
-            baseResponse.setMessage("게시글 작성 성공");
-            return ResponseEntity.ok().body(baseResponse);
-        } catch (DataAccessException e) {
-            baseResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-            baseResponse.setMessage(e.getMessage());
+        String url = boardDto.getUrl();
+
+        // 중복 URL 체크
+        Optional<BoardEntity> existingEntity = boardRepository.findByUrl(url);
+
+        if (existingEntity.isPresent()) {
+            baseResponse.setStatus(HttpStatus.BAD_REQUEST);
+            baseResponse.setMessage("이미 동일한 URL을 가진 게시글이 존재합니다.");
             return ResponseEntity.badRequest().body(baseResponse);
+        }
+        else {
+
+            try {
+                boardRepository.save(boardEntity);
+                baseResponse.setStatus(HttpStatus.CREATED);
+                baseResponse.setMessage("게시글 작성 성공");
+                return ResponseEntity.ok().body(baseResponse);
+            } catch (DataAccessException e) {
+                baseResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+                baseResponse.setMessage(e.getMessage());
+                return ResponseEntity.badRequest().body(baseResponse);
+            }
         }
 
 
