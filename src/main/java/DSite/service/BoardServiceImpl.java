@@ -22,56 +22,51 @@ public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
 
-
     @Override
     public ResponseEntity<BaseResponse> create(BoardDto boardDto) throws IOException {
+        BaseResponse baseResponse = new BaseResponse();
         Document document = Jsoup.connect(boardDto.getUrl()).get();
         String ogTitle = document.select("meta[property=og:title]").attr("content"); //제목
         String ogImage = document.select("meta[property=og:image]").attr("content"); //이미지
         String ogDescription = document.select("meta[property=og:description]").attr("content"); //설명
-        if (ogTitle.isEmpty()){
-            boardDto.setTitle("제목 미리보기를 지원하지 않습니다.");
-        } else{
-            boardDto.setTitle(ogTitle);
-        }
-        if (ogImage.isEmpty()){
-            boardDto.setImage("https://hook-s3-innosync.s3.ap-northeast-2.amazonaws.com/images/dgsw1.png");
-        } else {
-            boardDto.setImage(ogImage);
-        }
-        if (ogDescription.isEmpty()){
-            boardDto.setDescription("설명 미리보기를 지원하지 않습니다.");
-        } else {
-            boardDto.setDescription(ogDescription);
-        }
-        BoardEntity boardEntity = dtoToEntity(boardDto);
-
-        BaseResponse baseResponse = new BaseResponse();
-
-        String url = boardDto.getUrl();
-
-        // 중복 URL 체크
-        Optional<BoardEntity> existingEntity = boardRepository.findByUrl(url);
-
-        if (existingEntity.isPresent()) {
+        if (ogTitle.isEmpty() && ogDescription.isEmpty()) {
             baseResponse.setStatus(HttpStatus.BAD_REQUEST);
-            baseResponse.setMessage("이미 동일한 URL을 가진 게시글이 존재합니다.");
+            baseResponse.setMessage("사이트가 이상이 있음");
             return ResponseEntity.badRequest().body(baseResponse);
-        }
-        else {
+        } else {
+            if (ogImage.isEmpty()) {
+                boardDto.setImage("https://hook-s3-innosync.s3.ap-northeast-2.amazonaws.com/images/dgsw1.png");
+            } else {
+                boardDto.setImage(ogImage);
+            }
+            boardDto.setTitle(ogTitle);
+            boardDto.setDescription(ogDescription);
+            BoardEntity boardEntity = dtoToEntity(boardDto);
 
-            try {
-                boardRepository.save(boardEntity);
-                baseResponse.setStatus(HttpStatus.CREATED);
-                baseResponse.setMessage("게시글 작성 성공");
-                return ResponseEntity.ok().body(baseResponse);
-            } catch (DataAccessException e) {
-                baseResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
-                baseResponse.setMessage(e.getMessage());
+
+            String url = boardDto.getUrl();
+
+            // 중복 URL 체크
+            Optional<BoardEntity> existingEntity = boardRepository.findByUrl(url);
+
+            if (existingEntity.isPresent()) {
+                baseResponse.setStatus(HttpStatus.BAD_REQUEST);
+                baseResponse.setMessage("이미 동일한 URL을 가진 게시글이 존재합니다.");
                 return ResponseEntity.badRequest().body(baseResponse);
+            } else {
+
+                try {
+                    boardRepository.save(boardEntity);
+                    baseResponse.setStatus(HttpStatus.CREATED);
+                    baseResponse.setMessage("게시글 작성 성공");
+                    return ResponseEntity.ok().body(baseResponse);
+                } catch (DataAccessException e) {
+                    baseResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+                    baseResponse.setMessage(e.getMessage());
+                    return ResponseEntity.badRequest().body(baseResponse);
+                }
             }
         }
-
 
 
     }
