@@ -1,6 +1,6 @@
-package DSite.repository;
+package DSite.domain.Board.domain.repository;
 
-import DSite.entity.BoardEntity;
+import DSite.domain.Board.domain.BoardEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

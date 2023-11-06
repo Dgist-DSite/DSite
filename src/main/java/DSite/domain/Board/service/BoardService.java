@@ -1,13 +1,11 @@
-package DSite.service;
+package DSite.domain.Board.service;
 
-import DSite.dto.BoardDto;
-import DSite.entity.BoardEntity;
-import DSite.response.BaseResponse;
+import DSite.domain.Board.dto.BoardDto;
+import DSite.domain.Board.domain.BoardEntity;
+import DSite.global.common.dto.BaseResponse;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 public interface BoardService {
 

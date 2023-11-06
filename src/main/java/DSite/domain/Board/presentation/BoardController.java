@@ -1,15 +1,13 @@
-package DSite.controller;
+package DSite.domain.Board.presentation;
 
-import DSite.dto.BoardDto;
-import DSite.response.BaseResponse;
-import DSite.service.BoardService;
+import DSite.domain.Board.dto.BoardDto;
+import DSite.global.common.dto.BaseResponse;
+import DSite.domain.Board.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor

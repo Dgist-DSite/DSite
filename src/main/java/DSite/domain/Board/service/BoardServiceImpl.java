@@ -1,9 +1,10 @@
-package DSite.service;
+package DSite.domain.Board.service;
 
-import DSite.dto.BoardDto;
-import DSite.entity.BoardEntity;
-import DSite.repository.BoardRepository;
-import DSite.response.BaseResponse;
+import DSite.domain.Board.dto.BoardDto;
+import DSite.domain.Board.domain.BoardEntity;
+import DSite.domain.Board.domain.repository.BoardRepository;
+import DSite.domain.Board.exception.BoardUrlStrangeException;
+import DSite.global.common.dto.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,13 +30,10 @@ public class BoardServiceImpl implements BoardService{
         String ogTitle = document.select("meta[property=og:title]").attr("content"); //제목
         String ogImage = document.select("meta[property=og:image]").attr("content"); //이미지
         String ogDescription = document.select("meta[property=og:description]").attr("content"); //설명
-        if (ogTitle.isEmpty() && ogDescription.isEmpty()) {
-            baseResponse.setStatus(HttpStatus.BAD_REQUEST);
-            baseResponse.setMessage("사이트가 이상이 있음");
-            return ResponseEntity.badRequest().body(baseResponse);
-        } else {
+        if (ogTitle.isEmpty() && ogDescription.isEmpty()) throw BoardUrlStrangeException.EXCEPTION;
+        else {
             if (ogImage.isEmpty()) {
-                boardDto.setImage("https://hook-s3-innosync.s3.ap-northeast-2.amazonaws.com/images/dgsw1.png");
+                boardDto.setImage("https://hook-s3-innosync.s3.ap-northeast-2.amazonaws.com/images/Group+50.png");
             } else {
                 boardDto.setImage(ogImage);
             }
@@ -77,9 +75,7 @@ public class BoardServiceImpl implements BoardService{
         try {
             Optional<BoardEntity> boardEntity= boardRepository.findById(id);
             if (boardEntity.isPresent()) {
-                baseResponse.setData(boardEntity.get());
-                baseResponse.setMessage("Find");
-                baseResponse.setStatus(HttpStatus.OK);
+                baseResponse.of(HttpStatus.OK, "Find", boardEntity.get());
                 return ResponseEntity.ok(baseResponse);
             } else {
                 baseResponse.setStatus(HttpStatus.NOT_FOUND);

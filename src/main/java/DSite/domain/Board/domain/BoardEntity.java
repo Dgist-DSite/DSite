@@ -1,4 +1,4 @@
-package DSite.entity;
+package DSite.domain.Board.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;

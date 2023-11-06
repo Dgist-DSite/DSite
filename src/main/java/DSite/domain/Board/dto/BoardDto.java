@@ -1,4 +1,4 @@
-package DSite.dto;
+package DSite.domain.Board.dto;
 
 import jakarta.persistence.Column;
 import lombok.Builder;
