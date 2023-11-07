@@ -3,6 +3,7 @@ package DSite.global.common.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @Data
 public class BaseResponse {
@@ -22,5 +23,9 @@ public class BaseResponse {
         this.status = status;
         this.message = message;
         this.data = data;
+    }
+    public void of(HttpStatus status, Object message){
+        this.status = status;
+        this.message = message;
     }
 }
