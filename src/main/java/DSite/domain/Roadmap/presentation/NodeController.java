@@ -27,7 +27,7 @@ public class NodeController {
         return nodeService.fixContent(request);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponse> deleteContent(@PathVariable Long id){
+    public ResponseEntity<BaseResponse> deleteContent(@PathVariable String id){
         return nodeService.deleteContent(id);
     }
 

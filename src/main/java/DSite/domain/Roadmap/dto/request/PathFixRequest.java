@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class PathFixRequest {
     private Long id;
-    private Long startNodeId;
-    private Long endNodeId;
+    private String startNodeId;
+    private String endNodeId;
     private int type;
     private String category;
 }

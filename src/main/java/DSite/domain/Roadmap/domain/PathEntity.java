@@ -18,10 +18,10 @@ public class PathEntity {
     private Long id;
 
     @Column
-    private Long startNodeId;
+    private String startNodeId;
 
     @Column
-    private Long endNodeId;
+    private String endNodeId;
 
     @Column
     private int type;
@@ -29,19 +29,15 @@ public class PathEntity {
     @Column
     private String category;
 
-    @ManyToOne
-    @JoinColumn(name = "node_id")
-    private NodeEntity nodeEntity;
-
     @Builder
-    public PathEntity(Long startNodeId, Long endNodeId, int type, String category) {
+    public PathEntity(String startNodeId, String endNodeId, int type, String category) {
         this.startNodeId = startNodeId;
         this.endNodeId = endNodeId;
         this.type = type;
         this.category = category;
     }
 
-    public void fixData(Long id, Long startNodeId, Long endNodeId, int type, String category){
+    public void fixData(Long id, String startNodeId, String endNodeId, int type, String category){
         this.id=id;
         this.startNodeId = startNodeId;
         this.endNodeId = endNodeId;

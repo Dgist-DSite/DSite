@@ -9,8 +9,8 @@ import lombok.Setter;
 @Builder
 public class PathResponse {
     private Long id;
-    private Long startNodeId;
-    private Long endNodeId;
+    private String startNodeId;
+    private String endNodeId;
     private int type;
     private String category;
 }

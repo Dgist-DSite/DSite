@@ -14,7 +14,7 @@ public interface NodeService {
 
     ResponseEntity<BaseResponse> fixContent(NodeFixRequest nodeFixRequest);
 
-    ResponseEntity<BaseResponse> deleteContent(Long id);
+    ResponseEntity<BaseResponse> deleteContent(String id);
 
 
     default NodeEntity requestToEntity(NodeRequest nodeRequest){

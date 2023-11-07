@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,7 @@ public class PathServiceImpl implements PathService{
     private final PathRepository pathRepository;
 
     @Override
+    @Transactional
     public ResponseEntity<BaseResponse> create(PathRequest pathRequest) {
         BaseResponse baseResponse = new BaseResponse();
         pathRepository.save(requestToEntity(pathRequest));
@@ -32,6 +34,7 @@ public class PathServiceImpl implements PathService{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<BaseResponse> getAllContents(String what) {
         BaseResponse baseResponse = new BaseResponse();
 
@@ -45,6 +48,7 @@ public class PathServiceImpl implements PathService{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<BaseResponse> fixContent(PathFixRequest pathFixRequest) {
         BaseResponse baseResponse = new BaseResponse();
         if(pathRepository.findById(pathFixRequest.getId()).isEmpty()) throw RoadmapNotFoundException.EXCEPTION;
@@ -63,11 +67,15 @@ public class PathServiceImpl implements PathService{
     }
 
     @Override
+    @Transactional
     public ResponseEntity<BaseResponse> deleteContent(Long id) {
         BaseResponse baseResponse = new BaseResponse();
-        if(pathRepository.findById(id).isEmpty()) throw RoadmapNotFoundException.EXCEPTION;
+        Optional<PathEntity> pathEntity = pathRepository.findById(id);
+        if(pathEntity.isEmpty()) throw RoadmapNotFoundException.EXCEPTION;
         else{
+
             pathRepository.deleteById(id);
+
             baseResponse.of(HttpStatus.OK, "삭제 성공");
             return ResponseEntity.ok(baseResponse);
         }

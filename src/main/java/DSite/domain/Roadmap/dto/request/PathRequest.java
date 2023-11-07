@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PathRequest {
-    private Long startNodeId;
-    private Long endNodeId;
+    private String startNodeId;
+    private String endNodeId;
     private int type;
     private String category;
 }
