@@ -29,6 +29,10 @@ public class PathEntity {
     @Column
     private String category;
 
+    @ManyToOne
+    @JoinColumn(name = "node_id")
+    private NodeEntity nodeEntity;
+
     @Builder
     public PathEntity(Long startNodeId, Long endNodeId, int type, String category) {
         this.startNodeId = startNodeId;
