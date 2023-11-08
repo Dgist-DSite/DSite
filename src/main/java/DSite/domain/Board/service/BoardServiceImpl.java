@@ -102,7 +102,7 @@ public class BoardServiceImpl implements BoardService{
 
                 //역순으로 데이터 반환
                 Collections.reverse(boardDtos);
-                List<BoardDto> list = boardDtos.stream().limit(100).collect(Collectors.toList());
+                List<BoardDto> list = boardDtos.stream().limit(20).collect(Collectors.toList());
 
                 baseResponse.setStatus(HttpStatus.OK);
                 baseResponse.setMessage("성공");
