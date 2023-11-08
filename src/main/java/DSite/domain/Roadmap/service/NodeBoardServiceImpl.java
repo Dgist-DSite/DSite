@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,12 +29,12 @@ public class NodeBoardServiceImpl implements NodeBoardService {
 
     @Override
     @Transactional
-    public ResponseEntity<BaseResponse> create(NodeBoardRequest boardRequest) {
+    public ResponseEntity<BaseResponse> create(NodeBoardRequest boardRequest) throws IOException {
         BaseResponse baseResponse = new BaseResponse();
         NodeBoardDto nodeBoardDto = new NodeBoardDto();
         nodeBoardDto.setNodeId(boardRequest.getNodeId());
         nodeBoardDto.setUrl(boardRequest.getUrl());
-        Document document = (Document) Jsoup.connect(boardRequest.getUrl());
+        Document document = Jsoup.connect(nodeBoardDto.getUrl()).get();
         String ogTitle = document.select("meta[property=og:title]").attr("content"); //제목
         String ogImage = document.select("meta[property=og:image]").attr("content"); //이미지
         String ogDescription = document.select("meta[property=og:description]").attr("content"); //설명

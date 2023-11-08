@@ -8,8 +8,10 @@ import DSite.domain.Roadmap.dto.response.NodeBoardResponse;
 import DSite.global.common.dto.BaseResponse;
 import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
+
 public interface NodeBoardService {
-    ResponseEntity<BaseResponse> create(NodeBoardRequest boardRequest);
+    ResponseEntity<BaseResponse> create(NodeBoardRequest boardRequest) throws IOException;
     ResponseEntity<BaseResponse> getNodeBoard(String node);
     ResponseEntity<BaseResponse> fixNodeBoard(NodeBoardFixRequest nodeBoardFixRequest);
     ResponseEntity<BaseResponse> delete(Long id);

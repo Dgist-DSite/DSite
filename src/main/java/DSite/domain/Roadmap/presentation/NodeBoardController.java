@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/roadmap/board")
@@ -15,7 +17,7 @@ public class NodeBoardController {
     private final NodeBoardService nodeBoardService;
 
     @PostMapping("/")
-    public ResponseEntity<BaseResponse> create(@RequestBody NodeBoardRequest nodeBoardRequest){
+    public ResponseEntity<BaseResponse> create(@RequestBody NodeBoardRequest nodeBoardRequest) throws IOException {
         return nodeBoardService.create(nodeBoardRequest);
     }
     @GetMapping("/{node}")
