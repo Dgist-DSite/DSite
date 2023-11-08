@@ -50,7 +50,13 @@ public class NodeBoardServiceImpl implements NodeBoardService {
             NodeBoardEntity nodeBoardEntity = dtoToEntity(nodeBoardDto);
 
             nodeBoardRepository.save(nodeBoardEntity);
-            baseResponse.of(HttpStatus.OK, "저장성공");
+            List<NodeBoardEntity> nodeBoardEntities= nodeBoardRepository.findNodeBoardEntityByNodeIdContaining(boardRequest.getNodeId());
+
+            List<NodeBoardResponse> nodeBoardResponses = nodeBoardEntities.stream()
+                            .map(this::entityToResponse)
+                            .toList();
+
+            baseResponse.of(HttpStatus.OK, "저장성공", nodeBoardResponses);
             return ResponseEntity.ok(baseResponse);
         }
     }
