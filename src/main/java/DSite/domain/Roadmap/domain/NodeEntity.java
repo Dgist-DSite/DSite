@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class NodeEntity {
     @Column
     private String category;
 
-    @Column
+    @ColumnDefault("")
     private String description;
 
     @Builder
