@@ -15,6 +15,7 @@ public class NodeResponse {
     private String text;
     private int nodeType;
     private String category;
+    private String description;
 }
 //nodetable
 //id int

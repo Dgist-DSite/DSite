@@ -33,13 +33,17 @@ public class NodeEntity {
     @Column
     private String category;
 
+    @Column
+    private String description;
+
     @Builder
-    public NodeEntity(float xPos, float yPos, String text, int nodeType, String category) {
+    public NodeEntity(float xPos, float yPos, String text, int nodeType, String category, String description) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.text = text;
         this.nodeType = nodeType;
         this.category = category;
+        this.description = description;
     }
 
     public void fixXPos(float xPos) {
@@ -60,6 +64,10 @@ public class NodeEntity {
 
     public void fixCategory(String category) {
         this.category = category;
+    }
+
+    public void fixDescription(String description) {
+        this.description = description;
     }
 }
 

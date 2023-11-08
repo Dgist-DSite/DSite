@@ -24,6 +24,7 @@ public interface NodeService {
                 .text(nodeRequest.getText())
                 .nodeType(nodeRequest.getNodeType())
                 .category(nodeRequest.getCategory())
+                .description(nodeRequest.getDescription())
                 .build();
     }
     default NodeResponse entityToResponse(NodeEntity nodeEntity){
@@ -34,6 +35,7 @@ public interface NodeService {
                 .text(nodeEntity.getText())
                 .nodeType(nodeEntity.getNodeType())
                 .category(nodeEntity.getCategory())
+                .description(nodeEntity.getDescription())
                 .build();
     }
 

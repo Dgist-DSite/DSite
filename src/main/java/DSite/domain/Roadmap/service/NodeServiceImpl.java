@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -63,6 +62,7 @@ public class NodeServiceImpl implements NodeService{
             fixNodeEntity.fixText(nodeFixRequest.getText());
             fixNodeEntity.fixNodeType(nodeFixRequest.getNodeType());
             fixNodeEntity.fixCategory(nodeFixRequest.getCategory());
+            fixNodeEntity.fixDescription(nodeFixRequest.getDescription());
 
             baseResponse.of(HttpStatus.OK, "수정 성공", nodeRepository.save(fixNodeEntity));
             return ResponseEntity.ok(baseResponse);
@@ -75,22 +75,8 @@ public class NodeServiceImpl implements NodeService{
         BaseResponse baseResponse = new BaseResponse();
         if (nodeRepository.findById(Long.valueOf(id)).isEmpty()) throw RoadmapNotFoundException.EXCEPTION;
         else {
-
-//            Long startNodeId = pathEntity.get().getStartNodeId();
-//            Long endNodeId = pathEntity.get().getEndNodeId();
-//
-//            List<PathEntity> pathEntitiesStart  = pathRepository.findByStartNodeIdContaining(startNodeId);
-//            pathEntitiesStart.forEach(i ->{
-//                pathRepository.deleteById(i.getId());
-//            });
-//            List<PathEntity> pathEntitiesEnd = pathRepository.findByEndNodeIdContaining(endNodeId);
-//            pathEntitiesEnd.forEach(i ->{
-//                pathRepository.deleteById(i.getId());
-//            });
-
             pathRepository.deleteByEndNodeIdContaining(id);
             pathRepository.deleteByStartNodeIdContaining(id);
-            //System.out.println("=====================================\n" + nodeEntity.get().getId() +"=====================================\n");
             nodeRepository.deleteById(Long.valueOf(id));
 
             baseResponse.of(HttpStatus.OK, "삭제 성공");

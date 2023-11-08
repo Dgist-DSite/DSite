@@ -11,6 +11,7 @@ public class NodeRequest {
     private String text;
     private int nodeType;
     private String category;
+    private String description;
 }
 
 //xPos float
