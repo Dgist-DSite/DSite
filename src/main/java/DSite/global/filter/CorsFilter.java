@@ -1,4 +1,4 @@
-package DSite.filter;
+package DSite.global.filter;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
