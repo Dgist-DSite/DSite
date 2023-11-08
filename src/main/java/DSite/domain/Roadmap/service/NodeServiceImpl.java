@@ -2,6 +2,7 @@ package DSite.domain.Roadmap.service;
 
 import DSite.domain.Roadmap.domain.NodeEntity;
 import DSite.domain.Roadmap.domain.PathEntity;
+import DSite.domain.Roadmap.domain.repository.NodeBoardRepository;
 import DSite.domain.Roadmap.domain.repository.NodeRepository;
 import DSite.domain.Roadmap.domain.repository.PathRepository;
 import DSite.domain.Roadmap.dto.request.NodeFixRequest;
@@ -24,6 +25,7 @@ public class NodeServiceImpl implements NodeService{
 
     private final NodeRepository nodeRepository;
     private final PathRepository pathRepository;
+    private final NodeBoardRepository nodeBoardRepository;
 
     @Override
     @Transactional
@@ -78,7 +80,7 @@ public class NodeServiceImpl implements NodeService{
             pathRepository.deleteByEndNodeIdContaining(id);
             pathRepository.deleteByStartNodeIdContaining(id);
             nodeRepository.deleteById(Long.valueOf(id));
-
+            nodeBoardRepository.findNodeBoardEntityByNodeIdContaining(id);
             baseResponse.of(HttpStatus.OK, "삭제 성공");
             return ResponseEntity.ok(baseResponse);
         }
