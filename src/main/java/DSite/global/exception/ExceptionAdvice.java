@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ExceptionAdvice {
+
     @Getter
     @Builder
     @RequiredArgsConstructor
-    private static class ErrorResponse {
-        private final int status;
-        private final String message;
+    public record ErrorResponse(int status, String message) {
     }
+
 
     @ExceptionHandler({BusinessException.class})
     public ResponseEntity<ErrorResponse> handleException(BusinessException ex) {
@@ -23,6 +23,6 @@ public class ExceptionAdvice {
                 .status(ex.getError().getStatus().value())
                 .message(ex.getError().getMessage())
                 .build();
-        return new ResponseEntity<ErrorResponse>(response, ex.getError().getStatus());
+        return new ResponseEntity<>(response, ex.getError().getStatus());
     }
 }
