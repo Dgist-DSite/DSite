@@ -1,8 +1,6 @@
 package DSite.global.exception;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -10,9 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionAdvice {
 
-    @Getter
     @Builder
-    @RequiredArgsConstructor
     public record ErrorResponse(int status, String message) {
     }
 
