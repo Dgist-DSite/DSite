@@ -27,6 +27,8 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 src/main/resources/application-aws.properties
+src/main/resources/bootsecurity.p12
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
