@@ -34,9 +34,8 @@ public class NodeEntity {
     @Column
     private String category;
 
-    @ColumnDefault("")
+    @Column(columnDefinition = "TEXT")
     private String description;
-
     @Builder
     public NodeEntity(float xPos, float yPos, String text, int nodeType, String category, String description) {
         this.xPos = xPos;
